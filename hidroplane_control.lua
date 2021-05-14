@@ -18,7 +18,7 @@ end
 function hidroplane.control(self, dtime, hull_direction, longit_speed, longit_drag, later_speed, later_drag, accel, player, is_flying)
     hidroplane.last_time_command = hidroplane.last_time_command + self.dtime
     if hidroplane.last_time_command > 1 then hidroplane.last_time_command = 1 end
-    if self.driver_name == nil then return end
+    --if self.driver_name == nil then return end
     local retval_accel = accel
 
     local rudder_limit = 30   
@@ -129,6 +129,12 @@ function hidroplane.control(self, dtime, hull_direction, longit_speed, longit_dr
 		elseif ctrl.left then
 			self._rudder_angle = math.min(self._rudder_angle+30*self.dtime,rudder_limit)
 		end
+
+        --I'm desperate, center all!
+        if ctrl.right and ctrl.left then
+            self._elevator_angle = 0
+            self._rudder_angle = 0
+        end
 	end
 
     if longit_speed > 0 then
